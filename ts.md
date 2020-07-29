@@ -118,6 +118,7 @@ function getCounter(): Counter {
 - protected 受保护的 （私有的，但在派生类中仍然可以访问）
 - readonly 只读的
 - static 静态的 （类名.属性名|方法名）
+- abstract 抽象的
 ## 存取器
 可以有效的控制对对象成员的访问
 ~~~typescript
@@ -136,4 +137,14 @@ class User {
 }
 ~~~
 ## 抽象类
-...
+抽象类中的抽象方法不包含具体实现并且必须在派生类中实现
+~~~typescript
+abstract class Department {
+    constructor(public name: string) {
+    }
+    printName(): void {
+        console.log('Department name: ' + this.name);
+    }
+    abstract printMeeting(): void; // 必须在派生类中实现
+}
+~~~
