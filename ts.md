@@ -148,3 +148,14 @@ abstract class Department {
     abstract printMeeting(): void; // 必须在派生类中实现
 }
 ~~~
+# [函数](https://www.tslang.cn/docs/handbook/functions.html)
+### 特性都差不多
+## this指向
+javaScript中，每个函数都包含两个非继承而来的方法：call()方法和apply()方法，功能相同，传递参数方式不同
+~~~javaScript
+function hello(thing) {
+  console.log(this + " says hello " + thing);
+}
+
+hello.call("Yehuda", "world") //=> Yehuda says hello world
+~~~
