@@ -152,10 +152,44 @@ abstract class Department {
 ### 特性都差不多
 ## this指向
 javaScript中，每个函数都包含两个非继承而来的方法：call()方法和apply()方法，功能相同，传递参数方式不同
-~~~javaScript
+~~~javascript
 function hello(thing) {
   console.log(this + " says hello " + thing);
 }
 
 hello.call("Yehuda", "world") //=> Yehuda says hello world
+~~~
+# [泛型](https://www.tslang.cn/docs/handbook/generics.html)
+使组件的复用性更强
+~~~typescript
+function identity<T>(arg: T): T {
+    return arg;
+}
+
+class GenericNumber<T> {
+    zeroValue: T;
+    add: (x: T, y: T) => T;
+}
+~~~
+# [枚举](https://www.typescriptlang.org/docs/handbook/enums.html)
+枚举允许我们定义一组命名常量。枚举需要初始化值
+~~~typescript
+// 数字会自增长
+enum Direction {
+    Up = 1,
+    Down,
+    Left,
+    Right,
+}
+enum Direction {
+    Up = "UP",
+    Down = "DOWN",
+    Left = "LEFT",
+    Right = "RIGHT",
+}
+// 可以定义不同类型的成员
+enum BooleanLikeHeterogeneousEnum {
+    No = 0,
+    Yes = "YES",
+}
 ~~~
