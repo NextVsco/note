@@ -203,3 +203,43 @@ let zoo = [new Rhino(), new Elephant(), new Snake()];
 let zoo: Animal[] = [new Rhino(), new Elephant(), new Snake()];
 ~~~
 如果没有找到最佳通用类型的话，类型推断的结果为联合数组类型，(Rhino | Elephant | Snake)[]
+# 类型兼容性
+~~~typescript
+interface Named {
+    name: string;
+}
+
+class Person {
+    name: string;
+}
+
+let p: Named;
+// OK, because of structural typing
+p = new Person();
+~~~
+TypeScript里的类型兼容性是基于结构子类型的。
+
+在使用基于名义类型的语言，比如C#或Java中，这段代码会报错，因为Person类没有明确说明其实现了Named接口。
+
+### 关于赋值
+~~~typescript
+interface Named {
+    name: string;
+}
+
+let x: Named;
+// y's inferred type is { name: string; location: string; }
+let y = { name: 'Alice', location: 'Seattle' };
+x = y;
+~~~
+编译器检查x中的每个属性，看是否能在y中也找到对应属性。 在这个例子中，y必须包含名字是name的string类型成员。y满足条件，因此赋值正确。
+### 比较两个函数
+~~~typescript
+let x = (a: number) => 0;
+let y = (b: number, s: string) => 0;
+
+y = x; // OK
+x = y; // Error
+~~~
+这里，x的每个参数在y中都能找到对应的参数，所以允许赋值。
+第二个赋值错误，因为y有个必需的第二个参数，但是x并没有，所以不允许赋值。
