@@ -1,4 +1,5 @@
-import Filter from "./filter-route";
+import Filter from "./route-filter";
+
 const point = wx;
 const keys = ["url", "appid", "mold", "success", "fail", "complete"]
 const modeType = {
