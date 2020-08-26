@@ -40,7 +40,25 @@ class Router extends Filter {
  */
 function defaultFill(data){
   if(data.mold==undefined){
+    if(data.url==undefined){
+      return null
+    } else if (data.url.substring(0, 4).indexOf("http") > -1) {
+      data.mold = "web"
+      // 是否为图片资源
+      let urlGroup = data.url.split("/")
+      var len = urlGroup.length
+      if( 
+        (urlGroup[len - 1].toLowerCase().indexOf(".jpg") != -1) ||
+        (urlGroup[len - 1].toLowerCase().indexOf(".jpeg") != -1) ||
+        (urlGroup[len - 1].toLowerCase().indexOf(".gif") != -1) ||
+        (urlGroup[len - 1].toLowerCase().indexOf(".bmp") != -1) ||
+        (urlGroup[len - 1].toLowerCase().indexOf(".png") != -1)
+      ){
+        data.mold = "picture"
+      }
+    } else if (true) {
 
+    }
   }
 }
 /**
