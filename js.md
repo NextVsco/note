@@ -70,3 +70,132 @@ worker.terminate();
 // Worker 线程
 self.close();
 ```
+
+# 内存垃圾回收
+这是最初级的垃圾收集算法。此算法把“对象是否不再需要”简化定义为“对象有没有其他对象引用到它”。如果没有引用指向该对象（零引用），对象将被垃圾回收机制回收。
+```javascript
+var o = { 
+  a: {
+    b:2
+  }
+}; 
+// 两个对象被创建，一个作为另一个的属性被引用，另一个被分配给变量o
+// 很显然，没有一个可以被垃圾收集
+
+var o2 = o; // o2变量是第二个对“这个对象”的引用
+
+o = 1;      // 现在，“这个对象”只有一个o2变量的引用了，“这个对象”的原始引用o已经没有
+
+var oa = o2.a; // 引用“这个对象”的a属性
+               // 现在，“这个对象”有两个引用了，一个是o2，一个是oa
+
+o2 = "yo"; // 虽然最初的对象现在已经是零引用了，可以被垃圾回收了
+           // 但是它的属性a的对象还在被oa引用，所以还不能回收
+
+oa = null; // a属性的那个对象现在也是零引用了
+           // 它可以被垃圾回收了
+```
+## 限制：循环引用
+该算法有个限制：无法处理循环引用的事例。在下面的例子中，两个对象被创建，并互相引用，形成了一个循环。它们被调用之后会离开函数作用域，所以它们已经没有用了，可以被回收了。然而，引用计数算法考虑到它们互相都有至少一次引用，所以它们不会被回收。
+```javascript
+function f(){
+  var o = {};
+  var o2 = {};
+  o.a = o2; // o 引用 o2
+  o2.a = o; // o2 引用 o
+
+  return "azerty";
+}
+
+f();
+
+// 实例
+var div;
+window.onload = function(){
+  div = document.getElementById("myDivElement");
+  div.circularReference = div;
+  div.lotsOfData = new Array(10000).join("*");
+};
+// myDivElement 这个 DOM 元素里的 circularReference 属性引用了 myDivElement，造成了循环引用
+```
+## 标记清除算法
+这个算法假定设置一个叫做根（root）的对象（在Javascript里，根是全局对象）。垃圾回收器将定期从根开始，找所有从根开始引用的对象，然后找这些对象引用的对象……从根开始，垃圾回收器将找到所有可以获得的对象和收集所有不能获得的对象。
+# class
+```javascript
+class People {}
+```
+转es5语法
+```javascript
+"use strict";
+
+function _instanceof(left, right) { 
+    if (right != null && typeof Symbol !== "undefined" && right[Symbol.hasInstance]) { 
+        return !!right[Symbol.hasInstance](left); 
+    } else { 
+        return left instanceof right; 
+    } 
+}
+
+// 判断 Constructor.prototype 是否出现在 instance 实例对象的原型链上
+function _classCallCheck(instance, Constructor) { 
+    if (!_instanceof(instance, Constructor)) {
+         throw new TypeError("Cannot call a class as a function"); 
+    } 
+}
+
+var People = function People() {
+  // 检查是否通过 new 调用
+  _classCallCheck(this, People);
+};
+```
+# Object
+## .assign()
+合并Object
+
+用法：Object.assign(obj1,obj2,obj3...)
+## .create()
+???
+## .entries()
+返回一个给定对象自身可枚举属性的键值对数组
+``` javascript
+const obj = { foo: 'bar', baz: 42 };
+console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
+```
+## .freeze()
+可以冻结一个对象。一个被冻结的对象再也不能被修改；
+ - 冻结了一个对象则不能向这个对象添加新的属性，
+ - 不能删除已有属性，
+ - 不能修改该对象已有属性的可枚举性、可配置性、可写性，以及不能修改已有属性的值。
+ - 此外，冻结一个对象后该对象的原型也不能被修改。
+
+该冻结是一个浅冻结
+``` javascript
+obj1 = {
+  internal: {}
+};
+
+Object.freeze(obj1);
+obj1.internal.a = 'aValue';
+
+obj1.internal.a // 'aValue'
+```
+### 深冻结函数
+``` javascript
+function deepFreeze(obj) {
+
+  // 取回定义在obj上的属性名
+  var propNames = Object.getOwnPropertyNames(obj);
+
+  // 在冻结自身之前冻结属性
+  propNames.forEach(function(name) {
+    var prop = obj[name];
+
+    // 如果prop是个对象，冻结它
+    if (typeof prop == 'object' && prop !== null)
+      deepFreeze(prop);
+  });
+
+  // 冻结自身(no-op if already frozen)
+  return Object.freeze(obj);
+}
+```

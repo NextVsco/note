@@ -1,4 +1,4 @@
-import Filter from "./Router-filter";
+  import Filter from "./Router-filter";
 
 const point = wx;
 const keys = ["url", "appid", "mold", "success", "fail", "complete"]
@@ -8,6 +8,7 @@ const modeType = {
   redirect: { keys, necessity: "url", carry: function (param) { wx.redirectTo(param); } },
   reLaunch: { keys, carry: function (param) { wx.reLaunch(param); } },
   tabbar: { keys, necessity: "url", carry: function (param) { wx.switchTab(param); } },
+  web: { keys, necessity: "url", carry: function (param) { } },
   app: { keys, necessity: "appid", carry: function (param) { } },
   phone: { keys, necessity: "url", carry: function (param) { } },
   picture: { keys, necessity: "url", carry: function (param) { } },
@@ -18,6 +19,7 @@ const modeType = {
  * 基本介绍：
  * 防抖，防止短暂时间内弹出多个窗口
  * <getData> 过滤获取数据，小程序view返回到事件中的数据包含其他多余信息
+ * <defaultFill> 自动匹配对应的mold
  */
 class Router extends Filter {
   constructor(e = {}) {
@@ -32,6 +34,7 @@ class Router extends Filter {
     var data = getData(e)
     data = defaultFill(data)
     // 执行
+
   }
 }
 /**
@@ -40,7 +43,10 @@ class Router extends Filter {
  */
 function defaultFill(data){
   if(data.mold==undefined){
-    if(data.url==undefined){
+    // 自动匹配类型
+    if (data.appid) {
+      data.mold = "app"
+    } else if (data.url == undefined) {
       return null
     } else if (data.url.substring(0, 4).indexOf("http") > -1) {
       data.mold = "web"
@@ -56,8 +62,10 @@ function defaultFill(data){
       ){
         data.mold = "picture"
       }
-    } else if (true) {
-
+    } else if (data.url.substring(0, 4).indexOf("tel:") > -1) {
+      data.mold = "phone"
+    } else if (data.url.substring(0, 4).indexOf("loc") > -1) {
+      data.mold = "location"
     }
   }
 }
