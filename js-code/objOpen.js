@@ -1,3 +1,8 @@
+/**
+ * 深度遍历对象
+ * 待完善，配置遍历层级，次数等
+ */
+
 var waitPool = []
 function ObjParse(obj, list = [], weight = 0) {
   for (var i in obj) {

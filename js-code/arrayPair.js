@@ -1,6 +1,7 @@
 /**
  * 二位数组的搭配，用于规格
  */
+
 function openList(list) {
   var templist = new Array(1)
   var temp2list = []
