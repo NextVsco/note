@@ -2,7 +2,7 @@
  * 二位数组的搭配，用于规格
  */
 function openList(list) {
-  var templist = new Array(i)
+  var templist = new Array(1)
   var temp2list = []
   for (var i in list) {
     for (var j in list[i]) {
