@@ -161,6 +161,9 @@ var People = function People() {
 const obj = { foo: 'bar', baz: 42 };
 console.log(Object.entries(obj)); // [ ['foo', 'bar'], ['baz', 42] ]
 ```
+## .getOwnPropertyNames()
+返回一个由指定对象的所有自身属性的属性名（包括不可枚举属性但不包括Symbol值作为名称的属性）组成的数组
+
 ## .freeze()
 可以冻结一个对象。一个被冻结的对象再也不能被修改；
  - 冻结了一个对象则不能向这个对象添加新的属性，
