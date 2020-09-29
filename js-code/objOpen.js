@@ -18,6 +18,7 @@ function ObjParse(obj, list = [], weight = 0) {
       waitPool.push({ obj: obj[i], list: list, weight: weight + 1 })
     } else if (typeof obj[i] == "function") { }
   }
+  // 解析下一层级Obj
   if (waitPool.length > 0 && waitPool[0].weight - 1 == weight) {
     var len = waitPool.length
     for (var i = 0; i < len; i++) {
