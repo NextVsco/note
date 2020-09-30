@@ -286,6 +286,21 @@ Object.defineProperty(object1, 'property1', {
 
 console.log(object1.property1)  // 42
 ```
+### 属性
+- `configurable`
+为 true 时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。
+- `enumerable`
+为 true 时，该属性才会出现在对象的枚举属性中
+- `value`
+该属性对应的值
+- `writable` 
+为 true 时，属性的值才能被赋值运算符改变。
+- `get`
+属性的 getter 函数，如果没有 getter，则为 undefined。当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 this 对象（由于继承关系，这里的this并不一定是定义该属性的对象）。该函数的返回值会被用作属性的值。
+默认为 undefined。
+- `set`
+属性的 setter 函数，如果没有 setter，则为 undefined。当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的 this 对象。
+默认为 undefined。
 
 ## .getOwnPropertyDescriptor()
 指定对象上一个自有属性对应的属性描述符。
@@ -415,3 +430,18 @@ console.log(array1.propertyIsEnumerable('length'));
 
 ## .prototype.valueOf()
 方法返回指定对象的原始值
+
+## .arguments
+是一个对应于传递给函数的参数的类数组对象
+
+## .length
+是函数对象的一个属性值，指该函数有多少个必须要传入的参数，即形参的个数
+``` javascript
+function a(name,...args){
+  // args 返回其余传入值包成的数组
+}
+console.log(a.length)  // 1
+```
+
+## .name
+属性返回函数实例的名称

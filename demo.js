@@ -1,17 +1,19 @@
-let f = function () {
-  this.a = 1;
-  this.b = 2;
+var person = {
+  a:1
 }
-/* 这么写也一样
-function f() {
- this.a = 1;
- this.b = 2;
-}
-*/
-let o = new f(); // {a: 1, b: 2}
+Object.defineProperty(person,'a',{
+  get(){
+      return this._a || 1 //定义一个新的属性和一个默认值
+  },
+  set(val){
+      this._a = val 
+  },
+  writable:true
+})
 
-// 在f函数的原型上定义属性
-f.prototype.b = 3;
-f.prototype.c = 4;
+person.a = "name"
 
-console.log(f.b)
+Object.defineProperty(person,'a',{
+  writable:false
+})
+console.log(person.a)
