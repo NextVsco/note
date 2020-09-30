@@ -1,0 +1,17 @@
+{
+  "name": "code-start",
+  "version": "1.0.0",
+  "description": "test code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "test"
+  ],
+  "author": "camou",
+  "license": "ISC",
+  "devDependencies": {
+    "webp-converter": "^2.3.0"
+  }
+}
