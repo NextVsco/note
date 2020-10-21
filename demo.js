@@ -1,19 +1,19 @@
-var person = {
-  a:1
+var datam = {
+  1:"first",
+  2:"last",
+  "f":function(){
+    return 1
+  }
 }
-Object.defineProperty(person,'a',{
-  get(){
-      return this._a || 1 //定义一个新的属性和一个默认值
-  },
-  set(val){
-      this._a = val 
-  },
-  writable:true
-})
+var data = {
+  b:null,
+  a:1,
+  c:undefined,
+  d:"name",
+  f:datam
+}
 
-person.a = "name"
+var copyData = JSON.parse(JSON.stringify(data))
 
-Object.defineProperty(person,'a',{
-  writable:false
-})
-console.log(person.a)
+console.log(JSON.stringify(datam))
+console.log(copyData)

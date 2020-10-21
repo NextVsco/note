@@ -1,0 +1,5 @@
+.mask {
+  /* https://www.cnblogs.com/luozhihao/p/4785076.html */
+  background : url("images/logo.png") no-repeat;
+  -webkit-mask : url("images/mask.png");
+}
