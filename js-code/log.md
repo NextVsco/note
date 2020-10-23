@@ -45,7 +45,7 @@
 ## [*DOM](https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model)
 文档对象模型
 
-## Encoding_API
+## Encoding API
 `实验中`，提供了在各种处理文本的机构的`字符编码`
 
 ## Encrypted Media Extensions API
@@ -174,3 +174,60 @@ io.observe(dom)
 
 ## MediaStream Recording API
 ? 录音
+
+## Navigation Timing API
+? 提供了可用于衡量一个网站性能的数据
+```javaScript
+// 计算页面加载所需的总时长：
+var perfData = window.performance.timing; 
+var pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+// 计算请求返回时长：
+var connectTime = perfData.responseEnd - perfData.requestStart;
+```
+
+## Network Information API
+`实验中`，`网络状态`API可以获取到系统的网络连接信息，比如说连接方式是 WiFi 还是蜂窝。应用程序可以根据此信息为用户展现不同清晰度的内容。
+
+## Page Visibility API
+使用选项卡式浏览，任何给定网页都有可能在后台，因此对用户不可见。页面可见性 API提供了您可以观察的事件，以便了解文档何时可见或隐藏，以及查看页面当前`可见性`状态的功能。
+
+页面可见性 API对于节省资源和提高性能特别有用，它使页面在文档不可见时避免执行不必要的任务。
+
+使用场景：
+  - 网站有图片轮播效果，只有在用户观看轮播的时候，才会自动展示下一张幻灯片。
+  - 显示信息仪表盘的应用程序不希望在页面不可见时轮询服务器进行更新。
+  - 页面想要检测是否正在渲染，以便可以准确的计算网页浏览量
+  - 当设备进入待机模式时，网站想要关闭设备声音（用户按下电源键关闭屏幕）
+
+## Payment Request API
+`支付`请求API为商家和支付者提供了统一的用户体验。
+改善表单支付带来的重复操作。
+
+## Performance API
+? `性能`相关，页面内渲染时间等信息。该接口支持应用程序中客户端的延时测量。
+https://w3c.github.io/perf-timing-primer/
+
+## Performance Timeline
+和上述 Performance API 近似。
+
+## Permissions API
+`权限`API可用于确定是否已授予或拒绝访问特定API的权限。
+
+## Pointer events
+`指针`是指一个可以明确指向屏幕上某一组坐标的硬件设备。
+
+## Pointer Lock API
+`实验中`，把鼠标事件的目标锁定到一个单独的元素，这就消除了鼠标在一个单独的方向上到底可以移动多远这方面的限制，并从视图中删去光标（第一人称视角?）。
+
+## Proximity Events
+`实验中`，API要求设备具有`接近传感器`，而该传感器仅在移动设备上才可用。
+例如，当用户在手机靠近耳朵的状态下拨打电话时，可以通过关闭智能手机的屏幕来应对。
+
+## Push API
+? `实验中`，Web应用程序接收从服务器发出的`推送消息`的能力，无论Web应用程序是否在用户设备前台，甚至刚加载完成。这样，开发人员就可以向用户投放异步通知和更新，从而让用户能更及时地获取新内容。
+
+## Resize Observer API
+通过该机制，代码可以`监视元素的大小`更改，并且每次大小更改时都会向观察者传递通知。
+
+## Resource Timing API
+获取和分析应用资源加载的详细网络计时数据
