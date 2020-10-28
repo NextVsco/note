@@ -231,3 +231,55 @@ https://w3c.github.io/perf-timing-primer/
 
 ## Resource Timing API
 获取和分析应用资源加载的详细网络计时数据
+
+## [*Server Sent Events](http://www.ruanyifeng.com/blog/2017/05/server-sent_events.html)
+使用 server-sent 事件，服务器可以在任何时刻向我们的 Web 页面推送数据和信息。这些被推送进来的信息可以在这个页面上作为 Events + data 的形式来处理。
+服务器向浏览器推送信息，除了 WebSocket，还有一种方法：Server-Sent Events（以下简称 SSE）。本文介绍它的用法。
+HTTP 协议无法做到服务器主动推送信息。但是，有一种变通方法，就是服务器向客户端声明，接下来要发送的是流信息（streaming）。
+总体来说，WebSocket 更强大和灵活。因为它是全双工通道，可以双向通信；SSE 是单向通道，只能服务器向浏览器发送，因为流信息本质上就是下载。
+- SSE 使用 HTTP 协议，现有的服务器软件都支持。WebSocket 是一个独立协议。
+- SSE 属于轻量级，使用简单；WebSocket 协议相对复杂。
+- SSE 默认支持断线重连，WebSocket 需要自己实现。
+- SSE 一般只用来传送文本，二进制数据需要编码后传送，WebSocket 默认支持传送二进制数据。
+- SSE 支持自定义发送的消息类型。
+```javaScript
+var source = new EventSource(url);
+// withCredentials 表示是否一起发送 Cookie
+var source = new EventSource(url, { withCredentials: true });
+
+// 建立连接
+source.onopen = function (event) {
+
+};
+// or
+source.addEventListener('open', function (event) {
+
+}, false);
+
+// 接收数据
+source.onmessage = function (event) {
+  var data = event.data;
+  // handle message
+};
+// or
+source.addEventListener('message', function (event) {
+  var data = event.data;
+  // handle message
+}, false);
+
+// 关闭连接
+source.close();
+```
+- open 建立连接
+- message 接收消息
+- error 通信错误
+
+## Service Worker API
+充当 Web 应用程序、浏览器与网络（可用时）之间的代理服务器
+...
+
+## Storage API
+? 定义了一个通用的、共享的存储系统，供所有 API 和技术使用，以存储各个网站的内容可访问数据。
+
+## Storage Access API
+?

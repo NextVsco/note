@@ -297,7 +297,7 @@ console.log(object1.property1)  // 42
 为 true 时，属性的值才能被赋值运算符改变。
 - `get`
 属性的 getter 函数，如果没有 getter，则为 undefined。当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 this 对象（由于继承关系，这里的this并不一定是定义该属性的对象）。该函数的返回值会被用作属性的值。
-默认为 undefined。
+默认为 undefined（不能和上述属性同时使用）。
 - `set`
 属性的 setter 函数，如果没有 setter，则为 undefined。当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的 this 对象。
 默认为 undefined。
