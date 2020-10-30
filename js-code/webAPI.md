@@ -1,4 +1,4 @@
-# [JS API](https://developer.mozilla.org/zh-CN/docs/Web/API)
+# [WEB API](https://developer.mozilla.org/zh-CN/docs/Web/API)
 看一遍所有的api，笔记笔记（只记录蓝色）
 
 ## Ambient Light Events
@@ -283,3 +283,78 @@ source.close();
 
 ## Storage Access API
 ?
+
+## Streams API
+文件流
+
+## Touch_events
+触摸事件接口
+
+## URL_API
+URL解析
+```javaScript
+let addr = new URL("https://mysite.com/login?user=someguy&page=news");
+try {
+  loginUser(addr.searchParams.get("user"));
+  gotoPage(addr.searchParams.get("page"));
+} catch(err) {
+  showErrorMessage(err);
+}
+// 参数排序
+addr.searchParams.sort();
+```
+
+## Vibration_API
+该`振动`硬件允许软件代码通过引起设备震动来向用户提供物理反馈
+```javaScript
+window.navigator.vibrate(200);
+window.navigator.vibrate([200]);
+
+// 使设备振动200毫秒，然后暂停100毫秒，然后再次使设备振动200毫秒
+window.navigator.vibrate([200, 100, 200]);
+```
+
+## Visual Viewport (ReadableStream)
+? 流API表示字节数据的可读流
+
+## Web Animations API
+网页动画API允许用于同步和定时更改网页的呈现，即DOM元素的动画
+
+## Web_Audio_API
+用于控制Web上的`音频`，为音频添加效果，创建音频可视化效果，应用空间效果（例如平移）等。
+
+## Web_Authentication_API
+web`身份验证`
+
+## Web_Crypto_API
+网络加密API是允许脚本中使用密码原语以使用密码的构建系统的接口。
+```javaScript
+window.crypto.getRandomValues(new Uint32Array(10))
+
+// window.crypto.subtle.generateKey
+
+```
+
+## Notifications_API
+`消息`通知，允许网页控制向最终用户显示系统通知。
+
+## Web Storage API
+在Web存储API提供了通过浏览器可以存储键/值对，以更直观的方式比使用机制
+
+## Web Workers API
+详见Worker
+
+## WebGL
+Web图形库，可在任何兼容的Web浏览器中渲染高性能的交互式3D和2D图形，而无需使用插件
+
+## WebRTC
+WebRTC（Web实时通信）是一项使Web应用程序和站点能够捕获和可选地传输音频和/或视频媒体，以及在不需要中介程序的情况下在浏览器之间交换任意数据的技术
+
+## WebVR API
+`不推荐`，WebVR提供了将虚拟现实设备（例如Oculus Rift或HTC Vive等头戴式显示器）暴露于Web应用程序的支持，从而使开发人员能够将显示器的位置和运动信息转换为围绕3D场景的运动。
+
+## WebVTT_API
+是一种用于使用`<track>`元素显示定时文本轨道（例如字幕或标题）的格式
+
+## WebXR_Device_API
+WebXR 是一组标准，这些标准一起用于支持将3D场景渲染到设计用于呈现虚拟世界（虚拟现实或 VR）或将图形图像添加到现实世界（增强现实或 AR）的硬件。 所述 WebXR设备API 实现WebXR功能集的核心，管理输出设备的选择，呈现3D场景到所选择的设备在适当的帧速率，和管理使用输入控制器创建运动矢量。
