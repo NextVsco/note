@@ -25,7 +25,8 @@ class fileReplace {
           this.ergodicFolder(path + "/" + data[i])
         }
       } else {
-        this.dataHandle(data, path)
+        var ndata = this.dataHandle(data, path)
+        fb.write("C:/nowWork/note/PUT.css", ndata)
       }
     })
   }
@@ -34,12 +35,12 @@ class fileReplace {
     var targets = this.dataSearch(data)
     var ndata = ""
 
+    console.log(data)
     for (let i = 0; i < targets.length; i++) {
-      
-      // console.log("数据前=>",targets[i])
       var workItem = this.workItem(targets[i].value)
       targets[i].value = workItem.value
-      // console.log("数据后=>",targets[i])
+      ndata += data.substring(i == 0 ? 0 : targets[i - 1].end, targets[i].start) + targets[i].value
+      if (i == (targets.length - 1)) { ndata += data.substring(targets[i].end) }
 
       this.addHandleLog({
         index: targets[i].start + workItem.index,
@@ -49,6 +50,7 @@ class fileReplace {
         path
       })
     }
+    return ndata
   }
 
   /* 匹配内容 */
@@ -74,7 +76,7 @@ class fileReplace {
 
   /* 处理数据 */
   workItem(data) {
-    function rep(data){
+    function rep(data) {
       return data || []
     }
 
@@ -84,7 +86,7 @@ class fileReplace {
     var unit = rep(height.match(/([0-9]+)([\w]+);/))[2]
     var borderRadius = rep(data.match(/([\s]|;)[\s]*border-radius[\s|:]*([^s|^;]*)[^;]*;/))
 
-    if(num && unit){
+    if (num && unit) {
       let borderRadiusValue = rep(borderRadius[0].match(/([\w|\d]+);/))
       value = borderRadiusValue[1]
       index = borderRadiusValue["index"] + borderRadius["index"]

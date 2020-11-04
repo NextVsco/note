@@ -1,0 +1,124 @@
+@import "/public/mihabit.wxss";
+
+.content.style1 {
+  width: 100%;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  background-color: #fff;
+}
+.content.style1 .img-view {
+  width: 240rpx;
+  height: 240rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+  background-color: #ddd;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+.content.style1 .info-view {
+  width: 100%;
+}
+.content.style1 .info-view .title {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+.content.style1 .info-view .igapr {
+  width: 180rpx;
+  height: 8rpx;
+  border-radius: 8rpx;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #f7f7f7;
+  margin-right: 20rpx;
+}
+.content.style1 .info-view .sult {
+  margin-top: 20rpx;
+}
+.content.style1 .info-view .igapr .value {
+  height: inherit;
+  border-radius: inherit;
+  background-color: #B6A289;
+}
+.content.style1 .info-view .text {
+  font-size: 22rpx;
+  color: #666;
+}
+.content.style1 .info-view .more .vice {
+  font-size: 24rpx;
+  margin-top: 20rpx;
+}
+.content.style1 .info-view .more .bottom {
+  margin-top: 32rpx;
+  flex-direction: row-reverse;
+}
+.content.style1 .info-view .more .price {
+  font-size: 36rpx;
+  color: #F54D1F;
+}
+.content.style1 .info-view .more .price .unit {
+  font-size: 24rpx;
+}
+.content.style1 .info-view .more .btn-share {
+  width: 156rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  text-align: center;
+  border-radius: 28rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: #937A68;
+  background: linear-gradient(135deg, #B9A68D 0%, #937A68 100%);
+}
+
+
+.content.style2 {
+  width: 100%;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  background-color: #fff;
+}
+.content.style2 .img-view {
+  width: 160rpx;
+  height: 160rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+  background-color: #ddd;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+.content.style2 .info-view {
+  width: 100%;
+}
+.content.style2 .info-view .title {
+  font-size: 28rpx;
+  font-weight: bold;
+}
+.content.style2 .info-view .more .vice {
+  font-size: 24rpx;
+  margin-top: 12rpx;
+}
+.content.style2 .info-view .more .bottom {
+  margin-top: 20rpx;
+  flex-direction: row-reverse;
+}
+.content.style2 .info-view .more .price {
+  font-size: 30rpx;
+}
+.content.style2 .info-view .more .price .unit {
+  font-size: 22rpx;
+}
+.content.style2 .info-view .more .btn-share {
+  width: 156rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  text-align: center;
+  border-radius: 28rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: #937A68;
+  background: linear-gradient(135deg, #B9A68D 0%, #937A68 100%);
+}
+
+.btn3 {
+  /* no h eight */
+}
