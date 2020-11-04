@@ -9,11 +9,16 @@ class fileReplace {
   /**
    * @param {*} e.root 查找目录
    * @param {*} e.fileType 文件类型
+   * @param {*} e.ignoreDir 忽略文件
+   * @param {*} e.logPath 修改记录文件地址
    */
   constructor(e = {}) {
     this.root = e.root
     this.fileType = e.fileType
     this.ignoreDir = e.ignoreDir
+    this.logPath = e.logPath
+    this.logData = ""
+    // this.readLogData()
     this.ergodicFolder(this.root)
   }
 
@@ -26,7 +31,7 @@ class fileReplace {
         }
       } else {
         var ndata = this.dataHandle(data, path)
-        fb.write("C:/nowWork/note/PUT.css", ndata)
+        if (ndata) { fb.write(path + ".css", ndata) }
       }
     })
   }
@@ -34,39 +39,43 @@ class fileReplace {
   dataHandle(data, path) {
     var targets = this.dataSearch(data)
     var ndata = ""
-
-    console.log(data)
+    var changelen = 0;
+    if (targets.length == 0) { return null }
     for (let i = 0; i < targets.length; i++) {
       var workItem = this.workItem(targets[i].value)
       targets[i].value = workItem.value
       ndata += data.substring(i == 0 ? 0 : targets[i - 1].end, targets[i].start) + targets[i].value
       if (i == (targets.length - 1)) { ndata += data.substring(targets[i].end) }
-
+      if (i > 0) { changelen += workItem.newValue.length - workItem.oldValue.length }
+      // add log
       this.addHandleLog({
-        index: targets[i].start + workItem.index,
-        nvalue: targets[i].newValue,
-        ovalue: targets[i].oldValue,
-        data,
+        index: targets[i].start + workItem.index + changelen,
+        nvalue: workItem.newValue,
+        ovalue: workItem.oldValue,
+        data: ndata,
         path
       })
     }
-    return data||ndata
+
+    return ndata
   }
 
   /* 匹配内容 */
   dataSearch(data) {
     let searchList = []
+    let subLen = 0;
     let index = 0;
     do {
       let value = data.match(/btn[^{]*{[^}]*height[^}]*border-radius[\s|:]*(6|8)[^}]*}/)
       if (!value) { data = "" }
       else {
         searchList.push({
-          value: value[0],
-          start: index + value["index"],
-          end: index + value["index"] + value[0].length
+          value:  value[0],
+          start: subLen + value["index"],
+          end: subLen + value["index"] + value[0].length
         })
-        index = value["index"] + value[0].length
+        index = value["index"] + value[0].length;
+        subLen += index
         data = data.substring(index)
       }
     } while (data.length > 0);
@@ -81,13 +90,12 @@ class fileReplace {
     }
 
     let index, value, nvalue;
-    var height = rep(data.match(/([\s]|;)[\s]*height[\s|:]*[^;]*;/))[0]
+    var height = rep(data.match(/([\s]|;|{)[\s]*height[\s|:]*[^;]*([\s]|;|})/))[0] || ""
     var num = rep(height.match(/([\d]+)/))[1]
-    var unit = rep(height.match(/([0-9]+)([\w]+);/))[2]
-    var borderRadius = rep(data.match(/([\s]|;)[\s]*border-radius[\s|:]*([^s|^;]*)[^;]*;/))
-
+    var unit = rep(height.match(/([0-9]+)([\w]+)([\s]|;|})/))[2]
+    var borderRadius = rep(data.match(/([\s]|;)[\s]*border-radius[\s|:]*([^s|^;]*)[^;]*([\s]|;|})/))
     if (num && unit) {
-      let borderRadiusValue = rep(borderRadius[0].match(/([\w|\d]+);/))
+      let borderRadiusValue = rep(borderRadius[0].match(/([\w|\d]+)([\s]|;|})/))
       value = borderRadiusValue[1]
       index = borderRadiusValue["index"] + borderRadius["index"]
       nvalue = parseFloat(num) / 2 + unit
@@ -102,7 +110,7 @@ class fileReplace {
   }
 
   /**
-   * 添加替换记录
+   * 添加替换记录（缺陷，未考虑替换内容中出现的换行及内容部分）
    * @param {Object} object
    * @param {Number} object.index 替换字符串下标
    * @param {String} object.ovalue 旧数据
@@ -111,7 +119,22 @@ class fileReplace {
    * @param {String} object.path 文件地址
    */
   addHandleLog({ index, nvalue, ovalue, data, path }) {
-    // console.log()
+    function rep(data) {
+      return data || []
+    }
+    function nofund(index) { return index == -1 ? 0 : index }
+    var logData = ""
+    logData += "\n\n" + new Date()
+    logData += "\n" + path
+    logData += "\n" + (rep(data.substring(0, index).match(/\n/g)).length + 1 ) + ":"
+    logData += (index - nofund(data.substring(0, index).lastIndexOf("\n"))) + " (" + index + ")"
+    logData += "\n" + "[before]" 
+    logData += "\n" + ovalue
+    logData += "\n" + "[after]" 
+    logData += "\n" + nvalue
+
+    this.logData += logData
+    this.writerLogData()
   }
 
   /* 过滤文件 */
@@ -130,11 +153,27 @@ class fileReplace {
     }
     else { return false }
   }
+
+  /* 读取记录文件内容 */
+  readLogData() {
+    fb.read(this.logPath, (data) => {
+      this.logData = data + this.logData
+    })
+  }
+
+  /* 写入记录文件 */
+  writerLogData() {
+    if (this.LogWriteTime) { clearTimeout(this.LogWriteTime) }
+    this.LogWriteTime = setTimeout(() => {
+      this.LogWriteTime = null
+      fb.write(this.logPath, this.logData)
+    }, this.LogWriteDelay || 500)
+  }
 }
 
 new fileReplace({
-  // root: "C:/nowWork/wx-project/celebrityMall",
-  root: "C:/nowWork/wx-project/celebrityMall/components/goods/common/index.wxss",
+  root: "C:/nowWork/note/demo/TEXT.wxss",
   fileType: "wxss",
-  ignoreDir: [".svn"]
+  ignoreDir: [".svn"],
+  logPath: "C:/nowWork/note/demo/PUT2.log"
 })

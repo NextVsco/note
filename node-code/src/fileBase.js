@@ -12,9 +12,15 @@ function read(path, back) {
   fs.readFile(path, "utf-8", function (err, data) {
     if (err) {
       if (err.errno == -4068) { readDir(path, back); return }
-      else { throw err; }
+      else {
+        try {
+          throw err;
+        } catch (error) {
+          data = ""
+        }
+      }
     }
-    back(data)
+    back(data, err)
   })
 }
 
