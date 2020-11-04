@@ -61,6 +61,7 @@ class fileReplace {
   }
 
   /* 匹配内容 */
+  /* 在wxss中，匹配btn... { ... } 中带有 height 和 border-radius 并且 border-radius 后面的值包含6、8的数据 */
   dataSearch(data) {
     let searchList = []
     let subLen = 0;
@@ -84,6 +85,7 @@ class fileReplace {
   }
 
   /* 处理数据 */
+  /* 提取上述匹配到数据中 height 的部分，获取值和单位，在存在有效值的情况下替换 border-radius 的值 */
   workItem(data) {
     function rep(data) {
       return data || []
