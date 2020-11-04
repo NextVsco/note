@@ -50,7 +50,7 @@ class fileReplace {
         path
       })
     }
-    return ndata
+    return data||ndata
   }
 
   /* 匹配内容 */
