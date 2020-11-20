@@ -3,3 +3,24 @@
   background : url("images/logo.png") no-repeat;
   -webkit-mask : url("images/mask.png");
 }
+
+/* 减少css 重绘、重排
+
+  bodystyle=document.body.style; 
+  bodystyle.color=red; 
+  bodystyle.height=1000px; 
+  bodystyle.width=100%;
+
+  => 减少操作次数
+
+  bodystyle=document.body.style; 
+  bodystyle.cssText='color:red;height:1000px;width:100%'; 
+
+
+  导致重排的情况有：
+  ① 添加或删除可见的 DOM 元素；
+  ② 元素位置改变；
+  ③ 元素尺寸（外边距、内边距、边框厚度、宽度、高度等属性）改变；
+  ④ 内容改变，如文本改变和图片被替代；
+  ⑤ 页面渲染初始化；浏览器窗口尺寸改变。
+*/

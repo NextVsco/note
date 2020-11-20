@@ -1,7 +1,9 @@
 # [ELECTRON](http://www.electronjs.org/docs)
 
-## install
-```sh
-npm init
-npm install --save-dev electron
-```
+## 程序加载进度条
+
+## 原生文件拖放
+
+## 自定义桌面右键菜单（三端需要独立设置）
+
+## WebDriver 自动化测试工具
