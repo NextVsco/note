@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>流信息</title>
+</head>
+
+<body>
+  <div id="btn">关闭</div>
+  <script>
+    var url = "/stream";
+    var source = new EventSource(url, {
+      withCredentials: true
+    });
+    
+    source.onopen = (e)=>{console.log('open',e)}
+    source.onmessage = (e)=>{console.log('message',e)}
+    source.onerror = ()=>{console.log('error')}
+
+    document.getElementById('btn').addEventListener("click", function () {
+      console.log('close')
+      // 关闭连接
+      source.close();
+    })
+  </script>
+</body>
+
+</html>

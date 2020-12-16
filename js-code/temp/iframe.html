@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iframe</title>
+</head>
+
+<body>
+  <iframe src="https://www.baidu.com/" frameborder="0" width="100%" height="500px"></iframe>
+  <iframe src="/page/drag.html" frameborder="0" width="100%" height="500px"></iframe>
+  <div onclick="getDom()">获取元素</div>
+  <script>
+    var iframes = window.frames
+    function getDom(){
+      for (var i = 0; i < iframes.length; i++) {
+        try {
+          console.log(iframes[i].document.getElementsByTagName("div"))
+        } catch (error) {
+          // 非同源下网页内容无法访问
+          console.error(error)
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

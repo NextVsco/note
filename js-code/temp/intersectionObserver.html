@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>交叉观察器</title>
+  <style>
+    ::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    .auto {
+      margin: 20px auto;
+    }
+
+    .center {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .out {
+      width: 140px;
+      height: 180px;
+      background-color: #ccc;
+      overflow: scroll;
+    }
+
+    .box {
+      margin: 0 auto;
+      width: 120px;
+      height: 240px;
+      background-color: #eee;
+      border: 0 solid rgb(0, 255, 13);
+      border-top-width: 10px;
+      border-bottom-width: 10px;
+      overflow: scroll;
+    }
+
+    .content {
+      margin: 0 auto;
+      position: relative;
+      width: 100px;
+      background-color: rgba(255, 0, 0, 0.05);
+    }
+
+    .content .views,
+    .content .view {
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      color: #fff;
+      background-color: #003a02;
+      box-shadow: 0 0 2px 0 rgb(196, 218, 0);
+      margin: 5px;
+    }
+
+    .content .view {
+      background-color: #00bd0b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="out auto">
+    <div class="box">
+      <div class="content">
+        <div class="view">这边是视图</div>
+        <div class="views"></div>
+        <div class="views"></div>
+        <div class="views"></div>
+        <div class="views"></div>
+        <div class="views"></div>
+        <div class="views"></div>
+        <div class="views"></div>
+        <div class="view">这边是视图</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var io = new IntersectionObserver(function (res) {
+      console.log('watch', res)
+      if (res[0].isIntersecting) {
+        console.log('in view')
+      }
+    }, {
+      threshold: [0.5, 1] // 各百分比下触发监听器事件
+    });
+    var views = document.getElementsByClassName("view")
+    for (var i = 0; i < views.length; i++) {
+      io.observe(views[i])
+    }
+  </script>
+</body>
+
+</html>

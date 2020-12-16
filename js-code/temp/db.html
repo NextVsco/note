@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本地数据库</title>
+</head>
+
+<body>
+  <div>
+    <ul></ul>
+  </div>
+  <script>
+    var note = document.getElementsByTagName("ul")[0]
+    var db, objectStore
+    // Let us open our database
+    var DBOpenRequest = window.indexedDB.open("toDoList", 5);
+
+    DBOpenRequest.onsuccess = function (event) {
+      note.innerHTML += '<li>Database initialised.</li>';
+
+      // store the result of opening the database in the db variable.
+      // This is used a lot below
+      db = DBOpenRequest.result;
+      console.log("db", db)
+      // Run the addData() function to add the data to the database
+    };
+
+    // 新建表需要升级版本
+    DBOpenRequest.onupgradeneeded = function (event) {
+      db = event.target.result;
+      var objectStore;
+      if (!db.objectStoreNames.contains('person')) {
+        objectStore = db.createObjectStore('person', {
+          keyPath: 'id'
+        });
+        objectStore.createIndex('name', 'name', {
+          unique: false
+        });
+        objectStore.createIndex('email', 'email', {
+          unique: true
+        });
+      }
+      console.log('objectStore', objectStore)
+    }
+
+    function add() {
+      var request = db.transaction(['person'], 'readwrite')
+        .objectStore('person')
+        .add({
+          id: 2,
+          name: '李四',
+          age: 25,
+          email: 'lisi@example.com',
+          time: new Date().valueOf()
+        });
+
+      request.onsuccess = function (event) {
+        console.log('数据写入成功');
+      };
+
+      request.onerror = function (event) {
+        console.log('数据写入失败', event);
+      }
+    }
+
+    function read() {
+      var transaction = db.transaction(['person']);
+      var objectStore = transaction.objectStore('person');
+      var request = objectStore.get(2);
+
+      request.onerror = function (event) {
+        console.log('事务失败');
+      };
+
+      request.onsuccess = function (event) {
+        if (request.result) {
+          console.log('Name: ' + request.result.name);
+          console.log('Age: ' + request.result.age);
+          console.log('Email: ' + request.result.email);
+        } else {
+          console.log('未获得数据记录');
+        }
+      };
+    }
+
+    function readAll() {
+      var objectStore = db.transaction('person').objectStore('person');
+
+      objectStore.openCursor().onsuccess = function (event) {
+        var cursor = event.target.result;
+
+        if (cursor) {
+          console.log('Id: ' + cursor.key);
+          console.log('Name: ' + cursor.value.name);
+          console.log('Age: ' + cursor.value.age);
+          console.log('Email: ' + cursor.value.email);
+          console.log('Time: ' + (cursor.value.time ? new Date(cursor.value.time) : "未记录"));
+          cursor.continue();
+        } else {
+          console.log('没有更多数据了！');
+        }
+      };
+    }
+  </script>
+</body>
+
+</html>

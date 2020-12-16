@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReadableStream</title>
+</head>
+
+<body>
+  <div id="btn">stop</div>
+  <ol id="list1"></ol>
+  <script>
+    var interval;
+    var list1 = document.getElementById('list1');
+    var button = document.getElementById('btn');
+    const stream = new ReadableStream({
+      start(controller) {
+        interval = setInterval(() => {
+          let string = randomChars();
+          console.log(controller)
+          // Add the string to the stream
+          controller.enqueue(string);
+
+          // show it on the screen
+          let listItem = document.createElement('li');
+          listItem.textContent = string;
+          list1.appendChild(listItem);
+        }, 1000);
+
+        button.addEventListener('click', function () {
+          clearInterval(interval);
+          fetchStream();
+          controller.close();
+        })
+      },
+      pull(controller) {
+        // We don't really need a pull in this example
+      },
+      cancel() {
+        // This is called if the reader cancels,
+        // so we should stop generating strings
+        clearInterval(interval);
+      }
+    });
+
+    function randomChars(){
+      return Math.random()
+    }
+    function fetchStream(){
+
+    }
+  </script>
+</body>
+
+</html>

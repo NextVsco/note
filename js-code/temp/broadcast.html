@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="实现同源下浏览器不同窗口，Tab页，frame或者iframe下的浏览器上下文 (通常是同一个网站下不同的页面)之间的简单通讯">
+  <title>广播频道</title>
+  <style>
+    div {
+      margin: 8px;
+      font-size: 18px;
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    var bc = new BroadcastChannel('test_channel');
+    var postMsg = function (data) {
+      if (typeof data !== "string") {
+        data = JSON.stringify(data)
+      }
+      bc.postMessage(document.getElementById('title').innerHTML + ':' + data);
+    }
+    bc.onmessage = function (ev) {
+      console.log('接收数据', ev);
+      let div = document.createElement('div')
+      div.innerHTML = ev.data
+      document.body.appendChild(div)
+    }
+    window.addEventListener('unload', () => {
+      postMsg('bye-bye')
+      bc.close()
+    })
+
+    function creatBody() {
+      let div_title = document.createElement('div')
+      div_title.id = 'title'
+      div_title.innerHTML = `广播` + parseInt(Math.random() * 10)
+      div_title.style = "font-size:24px;font-weight:bold;"
+      let btn_sendMsg = document.createElement("div")
+      btn_sendMsg.innerHTML = '发送消息'
+      btn_sendMsg.style = "width:120px;height:32px;line-height:32px;text-align:center;background-color:#00bd0b;color:#fff;"
+      btn_sendMsg.addEventListener('click', function () {
+        postMsg('click-'+new Date().valueOf())
+      })
+      return [div_title, btn_sendMsg]
+    }
+    var doms = creatBody()
+    for (var i in doms) {
+      document.body.appendChild(doms[i])
+    }
+  </script>
+</body>
+
+</html>

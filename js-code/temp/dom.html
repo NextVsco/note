@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="demo" style="width: 100px;height: 100px;background-color: #00bd0b;"></div>
+  <script>
+    var MutationObserver = window.MutationObserver
+    || window.WebKitMutationObserver
+    || window.MozMutationObserver;
+    
+    function domChange(e){
+      console.log("demo change",e)
+    }
+    // dom监听事件
+    var mo = new MutationObserver(domChange)
+    var demo = document.getElementById('demo')
+    mo.observe(demo,{
+      attributes: true, 
+      childList: true, 
+      subtree: true 
+    })
+    // 添加属性
+    demo.setAttribute("data-m","m1")
+    demo.setAttribute("data-disable","")
+    // 添加样式
+    demo.classList.add("new_style")
+    demo.addEventListener("click",function(){
+      console.log('demo click')
+    })
+    // 获取属性
+    console.log(demo.getAttribute("data-m"))
+    demo.appendChild(document.createElement("button")).innerHTML="BUTTON"
+    setTimeout(()=>{
+      console.log('delay')
+    },0)
+    // 关闭dom监听
+    mo.disconnect();
+  </script>
+</body>
+</html>

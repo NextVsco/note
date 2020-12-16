@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>元素大小监听</title>
+</head>
+<style>
+  #box {
+    margin: 30px auto;
+    width: 200px;
+    background-color: #f00;
+    min-height: 200px;
+    word-wrap: break-word;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  div {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+  }
+</style>
+
+<body>
+  <div id="box">
+    <div id="height"></div>
+    <ul></ul>
+  </div>
+  <script>
+    var h = document.getElementById("height")
+    const resizeObserver = new ResizeObserver(entries => {
+      console.log("entries",entries)
+      h.innerHTML = `height : ${entries[0].contentRect.height}`
+    });
+    var box = document.getElementById("box")
+    box.addEventListener("click",()=>{
+      box.children[1].innerHTML += `<li draggable="false">cont</li>`
+    })
+    resizeObserver.observe(box);
+  </script>
+</body>
+
+</html>

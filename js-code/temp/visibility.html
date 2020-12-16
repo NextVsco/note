@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>页面可见性</title>
+</head>
+
+<body>
+  <ul></ul>
+  <script>
+    // 设置隐藏属性和改变可见属性的事件的名称
+    var hidden, visibilityChange;
+    if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
+      hidden = "hidden";
+      visibilityChange = "visibilitychange";
+    } else if (typeof document.msHidden !== "undefined") {
+      hidden = "msHidden";
+      visibilityChange = "msvisibilitychange";
+    } else if (typeof document.webkitHidden !== "undefined") {
+      hidden = "webkitHidden";
+      visibilityChange = "webkitvisibilitychange";
+    }
+
+    var ulElement = document.getElementsByTagName("ul")[0];
+
+    // 如果页面是隐藏状态，则暂停视频
+    // 如果页面是展示状态，则播放视频
+    function handleVisibilityChange() {
+      if (document[hidden]) {
+        ulElement.innerHTML += `<li>hidden time ${new Date()}</li>`
+      } else {
+        ulElement.innerHTML += `<li>visibility time ${new Date()}</li>`
+      }
+    }
+
+    // 如果浏览器不支持addEventListener 或 Page Visibility API 给出警告
+    if (typeof document.addEventListener === "undefined" || typeof document[hidden] === "undefined") {
+      console.log(
+        "This demo requires a browser, such as Google Chrome or Firefox, that supports the Page Visibility API.");
+    } else {
+      // 处理页面可见属性的改变
+      document.addEventListener(visibilityChange, handleVisibilityChange, false);
+    }
+  </script>
+</body>
+
+</html>

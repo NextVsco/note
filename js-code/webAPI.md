@@ -1,5 +1,5 @@
 # [WEB API](https://developer.mozilla.org/zh-CN/docs/Web/API)
-看一遍所有的api，笔记笔记（只记录蓝色）
+看一遍所有的api
 
 ## Ambient Light Events
 `实验中`，环境`光线`事件
@@ -31,7 +31,7 @@
   - ...
 
 ## *Channel Messaging API
-允许两个不同的脚本运行在同一个文档的不同浏览器上下文直接通讯，在每端使用一个端口（port）通过双向频道（channel）向彼此传递消息
+允许两个不同的脚本运行在同一个文档的不同浏览器上下文（比如两个 iframe，或者文档主体和一个 iframe，使用 SharedWorker 的两个文档，或者两个 worker）来直接通讯，在每端使用一个端口（port）通过双向频道（channel）向彼此传递消息
   - MessageChannel
   接口允许我们创建一个新的消息通道，并通过它的两个MessagePort属性发送数据（web Worker, iframe 间的`通信`，数据的`深拷贝`）。
 
@@ -358,3 +358,18 @@ WebRTC（Web实时通信）是一项使Web应用程序和站点能够捕获和�
 
 ## WebXR_Device_API
 WebXR 是一组标准，这些标准一起用于支持将3D场景渲染到设计用于呈现虚拟世界（虚拟现实或 VR）或将图形图像添加到现实世界（增强现实或 AR）的硬件。 所述 WebXR设备API 实现WebXR功能集的核心，管理输出设备的选择，呈现3D场景到所选择的设备在适当的帧速率，和管理使用输入控制器创建运动矢量。
+
+
+
+# INTERFACE
+
+## AbortController
+接口表示一个控制器对象，允许你根据需要中止一个或多个Web请求
+
+## AbortSignal
+? 通过 AbortController 对象与DOM请求（如Fetch）进行通信并在需要时将其中止
+
+## AbsoluteOrientationSensor
+`兼容性低` ? 相对于地球的参考坐标系统的设备的物理方向的对象
+
+## AbstractRange
