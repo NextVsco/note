@@ -1,7 +1,7 @@
 const { list } = require("./resource");
 
 var num = 0;
-var target = "11001100011110110000001"
+var target = "100100101111000100010011100001"
 
 console.log(target, target.length)
 for (var i = target.length - 1; i >= 0; i--) {
