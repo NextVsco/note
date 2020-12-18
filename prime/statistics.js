@@ -1,25 +1,18 @@
 const { list } = require("./resource");
 
-let maxLen = 19
-var data = {}
-i = 0
-while (list[i].length <= maxLen) {
-  let len = list[i].length
-  if (!data[len]) { data[len] = 0 + ( !1 && data[len-1] || 0 ) }
-  data[len]++
-  i++
+var num = 0;
+var target = "11001100011110110000001"
+
+console.log(target, target.length)
+for (var i = target.length - 1; i >= 0; i--) {
+  num += ((target[i] == "1") ? Math.pow(2, target.length - 1 - i) : 0)
 }
+console.log(num)
 
-console.log(
-  data
-)
-
-for(var j in list) {
-  let index = parseInt(list[j], 2)
-  if (index > maxLen) { break }
-  console.log(
-    index,
-    data[index],
-    data[index].toString(2)
-  )
+for (var i in list) {
+  let value = parseInt(list[i], 2)
+  if (num % value == 0) {
+    console.log('ero', value, num / value)
+    break
+  }
 }
