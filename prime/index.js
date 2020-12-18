@@ -1,3 +1,4 @@
-const DigPrime = require("./dig");
+// const DigPrime = require("./dig");
+// new DigPrime().main()
 
-new DigPrime().main()
+require("./statistics");
