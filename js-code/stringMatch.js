@@ -25,6 +25,9 @@ function codeMatch(char, index) {
     md.index = 0
   }
 }
+var data = [
+  
+]
 
 for (var i = 0; i < data.length; i++) {
   let value = data[i]

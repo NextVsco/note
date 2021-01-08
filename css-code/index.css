@@ -1,6 +1,7 @@
 .mask {
   /* https://www.cnblogs.com/luozhihao/p/4785076.html */
   background : url("images/logo.png") no-repeat;
+  mask : url("images/mask.png");
   -webkit-mask : url("images/mask.png");
 }
 

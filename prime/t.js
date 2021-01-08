@@ -22,3 +22,5 @@ function getMul(num = 2, max = 32) {
 }
 
 getMul()
+
+module.exports = { name: "1" }

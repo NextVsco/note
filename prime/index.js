@@ -25,4 +25,3 @@
 //   )
 //   console.log()
 // } while (i < 32)
-
