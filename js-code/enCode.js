@@ -7,7 +7,7 @@ var { codeType, selectObj } = require("./enCodeUnit");
 var text = `app.toPage({url:app.globalData.HOME,mold:console.log("hahaha")});console.log("aaaa")`
 text = `app[0]["name"].toPage({url:wx.once(),mold:wx.two(wx.moldType(wx.three())),success:wx.back})`
 text = `app.system.getPayNum(math.random())`
-text = `{url:"pagesindexindex"}`
+text = `(app.obj()).w`
 // text = `app.getObj({id:app.id,v:app.v})`
 
 console.log(

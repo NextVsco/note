@@ -63,6 +63,12 @@ function builtObj(str) {
   switch (str) {
     case "app":
       return {
+        obj: function () {
+          return {
+            w:1,
+            time: function () { return new Date() }
+          }
+        },
         id: "ID452sas4d2",
         v: "1.0.0",
         get: function (t = "nullt") { return t },
