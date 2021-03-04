@@ -10,27 +10,38 @@ function timeDown(endDateStr, nowDate = new Date()) {
   return data;
 }
 
+function getMonthEnd(time = new Date()) {
+  let year = time.getFullYear()
+  let month = time.getMonth() + 1
+  if (month == 12) { month = 0; year++ }
+  let monthEnd = (new Date(`${year}-${month + 1}-1`).valueOf())
+  return monthEnd
+}
+
 function getWeekEnd(time = new Date()) {
   let year = time.getFullYear()
   let month = time.getMonth() + 1
   let date = time.getDate()
   let day = time.getDay()
-  let differ = 6 - day
-  if (differ == 0) { differ = 7 }
-  let weekEnd = (new Date(`${year}-${month}-${date}`).valueOf()) + (differ * 86400000)
+  let differ = 7 - day
+  if (differ == 7) { differ = 0 }
+  let weekEnd = (new Date(`${year}-${month}-${date}`).valueOf()) + ((differ + 1) * 86400000)
   return weekEnd
 }
 
-for(var i =0;i<24;i++){
-  let value = "2020-2-"+(i+1)
-  var end = getWeekEnd(
-    // new Date("2020-1-30")
-    new Date(value)
-  )
+function timeT(nowTime){
   console.log(
-    value,
-    new Date(value),
-    new Date(end),
-    timeDown(end,new Date(value))
+    "当前时间", nowTime
   )
+  // console.log(
+  //   "月末", timeDown(getMonthEnd(new Date(nowTime)), new Date(nowTime))
+  // )
+  console.log(
+    "周末", timeDown(getWeekEnd(new Date(nowTime)), new Date(nowTime))
+  )
+}
+
+console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+for(var i=0;i<28;i++){
+  timeT(`2021-2-${i+1} 12:00`)
 }
