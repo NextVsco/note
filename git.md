@@ -26,3 +26,9 @@ git merge hotfix
 git branch -d hotfix
 先切换到主分支，然后对hotfix分支做合并操作，最后删除hotfix分支
 冲突部分还是建议使用视图工具
+
+## git 远程分支
+
+git push origin serverfix
+推送serverfix分支到origin仓库
+
